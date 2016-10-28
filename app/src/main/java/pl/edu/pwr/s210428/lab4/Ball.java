@@ -52,8 +52,8 @@ public class Ball extends View {
 
     public void changeXY(float dt)
     {
-        this.vx = this.vx-(this.sensor.readAX()*50) / dt;
-        this.vy = this.vy+(this.sensor.readAY()*50) / dt;
+        this.vx = this.vx-(this.sensor.readAX()*10) / dt;
+        this.vy = this.vy+(this.sensor.readAY()*10) / dt;
 
     }
 
@@ -62,20 +62,20 @@ public class Ball extends View {
         Log.d("Vy",""+vy);
         Log.d("Vx",""+vx);
 //        Log.d("this x",""+this.w);
-        if((vx+20) >= this.w)
+        if((vx+10) >= this.w)
         {
 
-            this.vx = this.w-20;
+            this.vx = this.w-10;
         }
-        else if((vx-20) <= 0)
+        else if((vx-10) <= 0)
         {
-            this.vx = 20;
+            this.vx = 10;
         }
         else if((vy-10)<=0)
         {
             this.vy = 10;
         }
-        else  if((vy+20) >= this.h){
+        else  if((vy+10) >= this.h){
             this.vy = this.h-10;
         }
     }
