@@ -15,11 +15,14 @@ import android.view.View;
 public class Ball extends View {
 
     private Paint ball;
-    private float vx;
-    private float vy;
+    public float vx;
+    public float vy;
     private ReadSensor sensor;
     private int h;
     private int w;
+    protected int g;
+
+
 
 
 
@@ -36,13 +39,18 @@ public class Ball extends View {
         super.onSizeChanged(w, h, oldw, oldh);
         this.h = h;
         this.w = w;
-        init();
+        init(20);
     }
 
-    private void init()
+    public void newGame(int g){
+        init(g);
+    }
+
+    private void init(int g)
     {
-        this.vx = this.w/2;
-        this.vy = this.h/2;
+        this.vx = 50;
+        this.vy = 50;
+        this.g = this.g+g;
 
     }
     private void initSensor(Context context)
@@ -52,34 +60,54 @@ public class Ball extends View {
 
     public void changeXY(float dt)
     {
-        this.vx = this.vx-(this.sensor.readAX()*10) / dt;
-        this.vy = this.vy+(this.sensor.readAY()*10) / dt;
+        this.vx = this.vx-(this.sensor.readAX()*this.g) / dt;
+        this.vy = this.vy+(this.sensor.readAY()*this.g) / dt;
 
     }
 
     private void checkXY(float vx,float vy)
     {
-        Log.d("Vy",""+vy);
-        Log.d("Vx",""+vx);
-//        Log.d("this x",""+this.w);
-        if((vx+10) >= this.w)
+        if((vx+13) >= this.w)
         {
 
-            this.vx = this.w-10;
+            this.vx = this.w-13;
         }
-        else if((vx-10) <= 0)
+        else if((vx) <=13)
         {
-            this.vx = 10;
+            this.vx = 13;
         }
-        else if((vy-10)<=0)
+        if((vy)<=13)
         {
-            this.vy = 10;
+            this.vy = 13;
         }
-        else  if((vy+10) >= this.h){
-            this.vy = this.h-10;
+        else  if((vy+13) >= this.h){
+            this.vy = this.h-13;
         }
     }
+    public void checkWall(Board board)
+    {
 
+//        int[] myX = new int[board.getMyX().length];
+//        int[] myY1 = new int[board.getMyY1().length];
+//        int[] myY2 = new int[board.getMyY2().length];
+
+//        int[] myX = board.getMyX();
+//        int[] myY1 = board.getMyY1();
+//        int[] myY2 = board.getMyY2();
+
+//        Log.d("aasd",""+board.x[0]);
+//
+//        for(int i=0;i<myX.length;i++)
+//        {
+//            if(this.vx >= (myX[i]) && this.vx <= (myX[i]) ) {
+//                Log.d("Sciana", "Y1 = " + myY1[i] + " Y2 = " + myY2[i] +" X = "+ myX[i]);
+//            }
+//            else{
+////                Log.d("Brak sciany","brak");
+//            }
+//            Log.d("X","X"+myX[i]);
+//        }
+    }
     private void initdraw(Canvas canvas){
 
         checkXY(this.vx, this.vy);
